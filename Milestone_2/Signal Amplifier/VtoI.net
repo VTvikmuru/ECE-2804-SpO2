@@ -1,0 +1,11 @@
+* Z:\run\user\1000\kio-fuse-hmJmqG\smb\User@192.168.122.191\Shared\CSS_Github\Class_24012024\ECE-2804-SpO2\Milestone_2\Signal Amplifier\VtoI.asc
+V1 -5V 0 -5
+V2 5V 0 5
+XU1 0 N001 5V -5V Out LF356
+R1 Out N001 50k
+I1 0 N001 SINE(40u 2u 1)
+.tran 1
+* Converts 42uA (2uA AC, 40uA Carrier) signal to 1Vpp Output.
+.lib LF356.sub
+.backanno
+.end
