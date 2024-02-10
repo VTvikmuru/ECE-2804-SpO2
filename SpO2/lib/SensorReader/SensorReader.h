@@ -1,16 +1,19 @@
-class SensorReader
-{
+#ifndef SensorReader_h
+#define SensorReader_h
+
+#include <Arduino.h>
+
+class SensorReader {
 private:
-    /* data */
+    int pin;
+    boolean dynamic;
+    int threshold;
+
 public:
-    SensorReader(/* args */);
+    SensorReader(int pin);
+    SensorReader(int pin, boolean dynamic);
+    SensorReader(int pin, int threshold);
     ~SensorReader();
 };
 
-SensorReader::SensorReader(/* args */)
-{
-}
-
-SensorReader::~SensorReader()
-{
-}
+#endif
