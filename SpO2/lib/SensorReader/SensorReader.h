@@ -14,6 +14,9 @@ public:
     SensorReader(int pin, boolean dynamic);
     SensorReader(int pin, int threshold);
     ~SensorReader();
-};
+
+// Reads sensor value 
+ int readSensorValue();
+}; 
 
 #endif
