@@ -22,13 +22,45 @@ SensorReader::SensorReader(int pin, int threshold) : inPin(pin), dynamic(false),
 
 }
 
-// Perform analog read
-int SensorReader::getSensorValue() 
-{
-    return analogRead(inPin);
-}
-
 SensorReader::~SensorReader() 
 {
 
+}
+
+// Perform analog read
+int SensorReader::getSensorValue() 
+{
+    return sensorValue;
+}
+
+void SensorReader::readSensorValue()
+{
+    sensorValue = analogRead(inPin);
+}
+
+void SensorReader::drawSensorValue()
+{   
+    int graphx = sensorValue / 10;
+
+    Serial.print((millis())/1000);
+
+    for (int i = 1; i < graphx; i++)
+    {
+        Serial.print(' ');
+    }
+
+    if (graphx > lastGraphx)
+    {
+        Serial.println('\\');
+    }else{
+        if (graphx < lastGraphx)
+        {
+            Serial.println('/');
+        }
+        else{
+            Serial.println('|');
+        }
+    }
+    
+    lastGraphx = graphx;
 }
