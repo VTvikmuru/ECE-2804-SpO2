@@ -13,12 +13,21 @@ public:
 
     // Reads sensor value 
     int getSensorValue();
+    void readSensorValue();
+    
+    //debug
+    void drawSensorValue();
 
  private:
 
     int inPin;
     bool dynamic;
     int threshold;
+
+    int sensorValue;
+
+    // Debug
+    int lastGraphx = 0;
 }; 
 
 #endif

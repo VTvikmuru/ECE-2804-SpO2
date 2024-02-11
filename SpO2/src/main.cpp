@@ -2,18 +2,20 @@
 #include <SensorReader.h>
 
 // put function declarations here:
-int myFunction(int, int);
+
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
 }
 
+SensorReader sensor(A0);
+
 void loop() {
-  // put your main code here, to run repeatedly:
+  // Sensor must be read and its value stored constantly
+  sensor.readSensorValue();
+  // Draws the read sensor value to serial monitor as graph
+  sensor.drawSensorValue();
 }
 
 // put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
