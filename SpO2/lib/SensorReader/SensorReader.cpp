@@ -36,6 +36,61 @@ int SensorReader::getSensorValue()
 void SensorReader::readSensorValue()
 {
     sensorValue = analogRead(inPin);
+    
+    if (previousState == LOW)
+    {
+        if (sensorValue > threshold)
+        {
+            previousState = HIGH;
+            if (!firstHigh)
+            {   
+                firstHigh = true;
+                last_threshold_time = millis();
+            }else{
+                period = millis() - last_threshold_time;
+                verifyBeat();
+                firstHigh = false;
+            } 
+        }
+    }else{
+        if (sensorValue < threshold)
+        {
+            previousState = LOW;
+        }
+    }
+}
+
+void SensorReader::verifyBeat()
+{
+    if(period <= 20 || period > 1400)
+    {
+        return;
+    }
+    if (verifyCall < 9)
+    {
+        periodarr[verifyCall] = period;
+        verifyCall++;
+    }else{
+        periodarr[9] = period;
+        verifyCall = 0;
+    }
+}
+
+int SensorReader::getPeriodAvg()
+{   
+    int sum = 0;
+
+    for (int i = 0; i < 10; i++)
+    {
+        sum = sum + periodarr[i];
+    }
+    sum = sum/10;
+    return (sum);
+}
+
+int SensorReader::getPeriod()
+{
+    return period;
 }
 
 void SensorReader::drawSensorValue()
@@ -64,3 +119,38 @@ void SensorReader::drawSensorValue()
     
     lastGraphx = graphx;
 }
+
+void SensorReader::drawPeriodInfo()
+{
+    Serial.print(" Period: ");
+    Serial.print(period);
+
+    Serial.print(" Sensor: ");
+    Serial.println(sensorValue);
+
+    if (arrayfull == true)
+    {
+        Serial.print(" Period Average: ");
+        Serial.print(getPeriodAvg());
+        Serial.print(" Average Frequency: ");
+        Serial.println(getFreqSec());
+    }
+    else{
+        arrayfull = true;
+        for (int i = 0; i < 10; i++)
+        {
+            if (periodarr[i] == 0)
+            {
+                arrayfull = false;
+            }   
+        }
+        
+    }
+}
+
+float SensorReader::getFreqSec()
+{
+    //int avg = getPeriodAvg();
+    return (1000*(1/((float)getPeriodAvg())));
+}
+//void SensorReader::getFrequency()

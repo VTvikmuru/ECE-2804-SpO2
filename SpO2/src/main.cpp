@@ -9,13 +9,14 @@ void setup() {
   Serial.begin(9600);
 }
 
-SensorReader sensor(A0);
+SensorReader sensor(A0, 500);
 
 void loop() {
   // Sensor must be read and its value stored constantly
   sensor.readSensorValue();
   // Draws the read sensor value to serial monitor as graph
-  sensor.drawSensorValue();
+  //sensor.drawSensorValue();
+  sensor.drawPeriodInfo();
 }
 
 // put function definitions here:
