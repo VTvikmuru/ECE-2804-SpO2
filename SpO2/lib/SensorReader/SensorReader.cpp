@@ -1,34 +1,43 @@
 #include <SensorReader.h>
 
-SensorReader::SensorReader(int pin) : inPin(pin), dynamic(false), threshold(0) {
+SensorReader::SensorReader(int pin) : dynamic(false), threshold(0) {
     // Check if pin number is valid
-    if (pin < 0 || pin > 13) {
-        // If invalid pin number
-        Serial.println("Invalid pin number!");
+    if (pin < A0 || pin > A5) {
+        // If invalid pin number, A0
+        Serial.println("Invalid pin number, default pin A0.");
+        this->pin = A0;
+    } else {
+        this->pin = pin;
     }
 }
 
-SensorReader::SensorReader(int pin, boolean dynamic) : inPin(pin), dynamic(dynamic), threshold(0) 
-{
+SensorReader::SensorReader(int pin, boolean dynamic) : dynamic(dynamic), threshold(0) {
     // Check if pin number is valid 
-    if (pin < 0 || pin > 13) {
-        // if invalid pin number
-        Serial.println("Invalid pin number!");
+    if (pin < A0 || pin > A5) {
+        // If invalid pin number, A0
+        Serial.println("Invalid pin number, default pin A0.");
+        this->pin = A0;
+    } else {
+        this->pin = pin;
     }
 }
 
-SensorReader::SensorReader(int pin, int threshold) : inPin(pin), dynamic(false), threshold(threshold)
-{
-
+SensorReader::SensorReader(int pin, int threshold) : dynamic(false), threshold(threshold) {
+    // Check if pin number is valid 
+    if (pin < A0 || pin > A5) {
+        // If invalid pin number, A0
+        Serial.println("Invalid pin number, default pin A0.");
+        this->pin = A0;
+    } else {
+        this->pin = pin;
+    }
 }
 
-// Perform analog read
-int SensorReader::getSensorValue() 
-{
-    return analogRead(inPin);
+SensorReader::~SensorReader() {
+    // Destructor 
 }
 
-SensorReader::~SensorReader() 
-{
-
+// Performs analog read
+int SensorReader::readSensorValue() {
+    return analogRead(pin);
 }
