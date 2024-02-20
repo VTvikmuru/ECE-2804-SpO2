@@ -5,9 +5,9 @@ SensorReader::SensorReader(int pin) : dynamic(false), threshold(0) {
     if (pin < A0 || pin > A5) {
         // If invalid pin number, A0
         Serial.println("Invalid pin number, default pin A0.");
-        this->pin = A0;
+        pin = A0;
     } else {
-        this->pin = pin;
+        pin = pin;
     }
 }
 
@@ -16,9 +16,9 @@ SensorReader::SensorReader(int pin, boolean dynamic) : dynamic(dynamic), thresho
     if (pin < A0 || pin > A5) {
         // If invalid pin number, A0
         Serial.println("Invalid pin number, default pin A0.");
-        this->pin = A0;
+        pin = A0;
     } else {
-        this->pin = pin;
+        pin = pin;
     }
 }
 
@@ -27,9 +27,9 @@ SensorReader::SensorReader(int pin, int threshold) : dynamic(false), threshold(t
     if (pin < A0 || pin > A5) {
         // If invalid pin number, A0
         Serial.println("Invalid pin number, default pin A0.");
-        this->pin = A0;
+        pin = A0;
     } else {
-        this->pin = pin;
+        pin = pin;
     }
 }
 
