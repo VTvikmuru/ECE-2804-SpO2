@@ -4,8 +4,12 @@
 #include <Arduino.h>
 
 class SensorReader {
+private:
+    int pin;
+    boolean dynamic;
+    int threshold;
+
 public:
-    // Constructors and Destructors
     SensorReader(int pin);
     SensorReader(int pin, boolean dynamic);
     SensorReader(int pin, int threshold);
