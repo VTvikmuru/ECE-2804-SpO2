@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#define maxWaveformStorageLength 60
+
 class SensorReader {
 public:
     // Constructors and Destructors
@@ -20,12 +22,19 @@ public:
     //debug
     void drawSensorValue();
     void drawPeriodInfo();
+    void drawArrayInfo();
+
+    // Waveform data
+    unsigned int lastWritten = 0;
+    unsigned int waveformArray[maxWaveformStorageLength] = {0};
+    unsigned int maxArrayLength = maxWaveformStorageLength;
 
  private:
 
     int inPin;
     bool dynamic;
     int threshold;
+    unsigned int arrayIndex = 0;
 
     int sensorValue;
 
@@ -42,6 +51,10 @@ public:
     int getPeriodAvg();
     int verifyCall = 0;
     int periodarr[10];
+
+    
+    //unsigned int arrayLength = 0;
+    
 }; 
 
 #endif

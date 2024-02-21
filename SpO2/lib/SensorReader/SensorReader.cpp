@@ -36,6 +36,16 @@ int SensorReader::getSensorValue()
 void SensorReader::readSensorValue()
 {
     sensorValue = analogRead(inPin);
+
+    // Write to storage array to store waveform information
+    waveformArray[arrayIndex] = sensorValue;
+    lastWritten = arrayIndex;
+    arrayIndex++;
+    if (arrayIndex >= maxWaveformStorageLength)
+    {
+        arrayIndex = 0;
+    }
+    
     
     if (previousState == LOW)
     {
@@ -143,8 +153,7 @@ void SensorReader::drawPeriodInfo()
             {
                 arrayfull = false;
             }   
-        }
-        
+        }    
     }
 }
 
@@ -152,5 +161,15 @@ float SensorReader::getFreqSec()
 {
     //int avg = getPeriodAvg();
     return (1000*(1/((float)getPeriodAvg())));
+}
+
+void SensorReader::drawArrayInfo()
+{
+    Serial.println("Values Start:");
+    for (int i = 0; i < maxArrayLength; i++)
+    {
+        Serial.println(waveformArray[i]);
+    }  
+    Serial.println("Values END\n"); 
 }
 //void SensorReader::getFrequency()
