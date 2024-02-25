@@ -54,8 +54,6 @@ public:
     int periodarr[10];
 
     int waveformWriteInterval = 0;
-    //unsigned int arrayLength = 0;
-    
-}; 
+};
 
 #endif
