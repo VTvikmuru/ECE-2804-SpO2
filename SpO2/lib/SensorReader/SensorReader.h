@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 
-#define maxWaveformStorageLength 60
+#define maxWaveformStorageLength 240
+#define dataWriteInterval 4
 
 class SensorReader {
 public:
@@ -52,7 +53,7 @@ public:
     int verifyCall = 0;
     int periodarr[10];
 
-    
+    int waveformWriteInterval = 0;
     //unsigned int arrayLength = 0;
     
 }; 

@@ -18,6 +18,7 @@
 enum dataDisplay{
     graph = 1,
     line = 2,
+    text = 3,
 };
 
 class DisplayHandler
@@ -33,8 +34,7 @@ public:
     void setDisplayBrightness(int brightness);
     void turnOnDisplay();
     void turnOffDisplay();
-    void drawData(dataDisplay dataType, int drawWidth, int drawHeight);
-    
+    void drawData(dataDisplay dataType, int drawWidth, int drawHeight, int drawOffsetx, int drawOffsety, String dataPoint);
 
 private:
     int displayPin = 0;
@@ -50,9 +50,15 @@ private:
     unsigned int * dataArray = nullptr;
     unsigned int * dataArrayUpdated = nullptr;
 
-    void drawDataGraph(int drawWidth, int drawHeight);
-    void drawDataLine(int drawWidth, int drawHeight);
+    String lastDrawnText;
 
+    void drawDataGraph(int drawWidth, int drawHeight);
+    void drawDataLine(int width, int height, int xOffset, int yOffset);
+    void drawText(int xOffset, int yOffset, int drawHeight, String dataPoint);
+    void drawData(dataDisplay dataType, int drawWidth, int drawHeight, int drawOffsetx, int drawOffsety);
+
+    #define DataBackground ILI9341_RED
+    #define DataForeground ILI9341_GREEN
 };
 
 DisplayHandler::DisplayHandler(unsigned int * Array, unsigned int * arrayLength, unsigned int * arrayIndex, int Pin)
@@ -107,7 +113,37 @@ void DisplayHandler::drawTest()
     turnOnDisplay();
 }
 
-void DisplayHandler::drawData(dataDisplay dataType, int drawWidth, int drawHeight)
+void DisplayHandler::drawData(dataDisplay dataType, int drawWidth, int drawHeight, int drawOffsetx, int drawOffsety, String dataPoint)
+{
+    if(dataPoint == "" || dataPoint == NULL)
+    {
+        drawData(dataType,  drawWidth,  drawHeight,  drawOffsetx,  drawOffsety);
+    } else{
+        drawText(drawOffsetx, drawOffsety, drawHeight, dataPoint);
+    }
+}
+
+void DisplayHandler::drawText(int xOffset, int yOffset, int drawHeight, String dataPoint)
+{
+    // Temporary way to remove old text
+    // tft.fillRect(0, yOffset, ILI9341_TFTWIDTH, 33, ILI9341_BLACK);
+    if(dataPoint == lastDrawnText)
+    {
+        return;
+    } 
+
+    for (int i = 0; i < 34; i++)
+    {
+        tft.drawFastHLine(0, yOffset+i, ILI9341_TFTWIDTH, ILI9341_BLACK);
+    }
+    
+    tft.setCursor(xOffset, yOffset);
+    tft.setTextSize(drawHeight);
+    tft.print(dataPoint);
+    lastDrawnText = dataPoint;
+}
+
+void DisplayHandler::drawData(dataDisplay dataType, int drawWidth, int drawHeight, int drawOffsetx, int drawOffsety)
 {
     if (dataType == dataDisplay::graph)
     {
@@ -115,7 +151,7 @@ void DisplayHandler::drawData(dataDisplay dataType, int drawWidth, int drawHeigh
     }
     if (dataType == dataDisplay::line)
     {
-        drawDataLine(drawWidth, drawHeight);
+        drawDataLine(drawWidth, drawHeight, drawOffsetx, drawOffsety);
     }
     
 }
@@ -138,17 +174,15 @@ void DisplayHandler::drawDataGraph(int width, int height)
         for (int i = 0; i < barWidth; i++)
         {
             //Serial.println("line 2");
-            tft.drawFastVLine((barWidth*l)+i, 0, height, ILI9341_RED);
-            tft.drawFastVLine((barWidth*l)+i+xOffset, yOffset, (int)(height*((float)(*(dataArray+l))/maxDatapoint)), ILI9341_GREEN);
+            tft.drawFastVLine((barWidth*l)+i, height, 0, DataBackground);
+            tft.drawFastVLine((barWidth*l)+i+xOffset, (int)(height*((float)(*(dataArray+l))/maxDatapoint)), yOffset, DataForeground);
             //Serial.println((barWidth*l)+i+xOffset);
            //tft.drawFastVLine((barWidth*l)+i, 0,ILI9341_TFTHEIGHT, ILI9341_GREEN);
         }
 }
 
-void DisplayHandler::drawDataLine(int width, int height)
+void DisplayHandler::drawDataLine(int width, int height, int xOffset, int yOffset)
 {
-    int xOffset = 0;
-    int yOffset = 0;
 
     int maxDatapoint = 1023;
 
@@ -160,13 +194,13 @@ void DisplayHandler::drawDataLine(int width, int height)
     for (int i = 0; i < barWidth; i++)
     {
         //Serial.println("line 2");
-        tft.drawFastVLine((barWidth*l)+i, 0, height, ILI9341_RED);
+        tft.drawFastVLine((barWidth*l)+i+xOffset, ILI9341_TFTHEIGHT - height+yOffset, height, DataBackground);
 
         int drawHeight = (int)(height*((float)(*(dataArray+l))/maxDatapoint));
         //tft.drawFastVLine((barWidth*l)+i+xOffset, yOffset, (int)(height*((float)(*(dataArray+l))/maxDatapoint)), ILI9341_GREEN);
-        tft.drawFastHLine((barWidth*l)+i+xOffset, drawHeight, barWidth, ILI9341_GREEN);
-        tft.drawFastHLine((barWidth*l)+i+xOffset, drawHeight+1, barWidth, ILI9341_GREEN);
-        tft.drawFastHLine((barWidth*l)+i+xOffset, drawHeight+2, barWidth, ILI9341_GREEN);
+        tft.drawFastHLine((barWidth*l)+i+xOffset, ILI9341_TFTHEIGHT - drawHeight+yOffset, barWidth, DataForeground);
+        tft.drawFastHLine((barWidth*l)+i+xOffset, ILI9341_TFTHEIGHT - drawHeight+1+yOffset, barWidth, DataForeground);
+        tft.drawFastHLine((barWidth*l)+i+xOffset, ILI9341_TFTHEIGHT - drawHeight+2+yOffset, barWidth, DataForeground);
     }
 }
 

@@ -38,14 +38,19 @@ void SensorReader::readSensorValue()
     sensorValue = analogRead(inPin);
 
     // Write to storage array to store waveform information
-    waveformArray[arrayIndex] = sensorValue;
-    lastWritten = arrayIndex;
-    arrayIndex++;
-    if (arrayIndex >= maxWaveformStorageLength)
+    if(waveformWriteInterval == dataWriteInterval)
     {
-        arrayIndex = 0;
+        waveformArray[arrayIndex] = sensorValue;
+        lastWritten = arrayIndex;
+        arrayIndex++;
+        if (arrayIndex >= maxWaveformStorageLength)
+        {
+            arrayIndex = 0;
+        }
+        waveformWriteInterval = 0;
+    } else {
+        waveformWriteInterval++;
     }
-    
     
     if (previousState == LOW)
     {
