@@ -48,6 +48,8 @@ void SensorReader::readSensorValue()
 {
     sensorValue = analogRead(inPin);
 
+    selectMuxInput(0);
+
     // Write to storage array to store waveform information
     if(waveformWriteInterval == dataWriteInterval)
     {
@@ -190,3 +192,27 @@ void SensorReader::drawArrayInfo()
 }
 //void SensorReader::getFrequency()
 
+<<<<<<< Updated upstream
+=======
+//selects the input for the mux
+void SensorReader::selectMuxInput(int input) {
+    digitalWrite(MUX_SELECT_PIN0, input & 0x01);
+    digitalWrite(MUX_SELECT_PIN1, (input >> 1) & 0x01);
+    digitalWrite(MUX_SELECT_PIN2, (input >> 2) & 0x01);
+}
+
+void SensorReader::activateLED(int ledPin) {
+    digitalWrite(ledPin, HIGH);
+}
+
+void SensorReader::deactivateLED(int ledPin) {
+    digitalWrite(ledPin, LOW);
+}
+
+//selects signal path for mux
+void SensorReader::selectSignalPath(int path) {
+    digitalWrite(MUX_SELECT_PIN0, path & 0x01);
+    digitalWrite(MUX_SELECT_PIN1, (path >> 1) & 0x01);
+    digitalWrite(MUX_SELECT_PIN2, (path >> 2) & 0x01);
+}
+>>>>>>> Stashed changes
