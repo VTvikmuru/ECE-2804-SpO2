@@ -6,6 +6,10 @@
 #define maxWaveformStorageLength 240
 #define dataWriteInterval 4
 
+#define MUX_SELECT_PIN0 5
+#define MUX_SELECT_PIN1 6
+#define MUX_SELECT_PIN2 7
+
 class SensorReader {
 public:
     // Constructors and Destructors
@@ -30,12 +34,17 @@ public:
     unsigned int waveformArray[maxWaveformStorageLength] = {0};
     unsigned int maxArrayLength = maxWaveformStorageLength;
 
+    void activateLED(int ledpin);    //activates LED
+    void deactivateLED(int ledpin);  //deactivates LED
+    void selectSignalPath(int path); //selects signal path for mux
+
  private:
 
     int inPin;
     bool dynamic;
     int threshold;
     unsigned int arrayIndex = 0;
+    int muxSelectPin;  //Initialize mux select pin
 
     int sensorValue;
 
@@ -53,7 +62,15 @@ public:
     int verifyCall = 0;
     int periodarr[10];
 
+<<<<<<< Updated upstream
     int waveformWriteInterval = 0;
 };
+=======
+    
+    //unsigned int arrayLength = 0;
+    
+    void selectMuxInput(int input);   //Function to select input for mux
+}; 
+>>>>>>> Stashed changes
 
 #endif
