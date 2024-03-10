@@ -11,31 +11,14 @@
 // TFT_LED = 6
 // SensorIn = A0
 
-#define TFT_DC 9
-#define TFT_CS 10
-#define MUX_OUTPUT_PIN A0
-#define LED1 2
-#define LED2 3
-
 //Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 SensorReader sensor(A0, 205);
 //DisplayHandler handler(&sensor.maxArrayLength, &sensor.waveformArray);
 DisplayHandler handler(&sensor.waveformArray[0], &sensor.maxArrayLength, &sensor.lastWritten, 6);
 
-//Intitialize functions for multiplexer implementation 
-
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-
-  // Set up mux select pins
-  pinMode(MUX_SELECT_PIN0, MUX_OUTPUT_PIN);
-  pinMode(MUX_SELECT_PIN1, MUX_OUTPUT_PIN);
-  pinMode(MUX_SELECT_PIN2, MUX_OUTPUT_PIN);
-
-  sensor.activateLED(LED1);     // activate LED1 initially
-  sensor.selectSignalPath(0);   // Select signal path 0
 
   handler.handlerBegin();
   
@@ -53,25 +36,6 @@ void loop() {
 
   //sensor.drawArrayInfo();
 
-<<<<<<< Updated upstream
   handler.drawData(dataDisplay::line, ILI9341_TFTWIDTH, 2*ILI9341_TFTHEIGHT/3, 0, 0, "");
   handler.drawData(dataDisplay::text, 0, 2, 35, 20, String(sensor.getFreqSec()) + "Hz,\n   " + String((int)(sensor.getFreqSec() * 60)) + "Bpm");
-=======
-  handler.drawData(dataDisplay::line, ILI9341_TFTWIDTH, ILI9341_TFTHEIGHT);
-   
-    // Read sensor value
-    sensor.readSensorValue();
-
-    sensor.deactivateLED(LED1); // Deactivate LED1
-    sensor.activateLED(LED2);   // Activate LED2
-    sensor.selectSignalPath(1);     // Select path 1
-
-    // Read sensor value
-    sensor.readSensorValue();
-
-    sensor.deactivateLED(LED2); // Deactivate LED2
-    sensor.activateLED(LED1);   // Activate LED1
-    sensor.selectSignalPath(0);     // Select path 0
->>>>>>> Stashed changes
 }
-
