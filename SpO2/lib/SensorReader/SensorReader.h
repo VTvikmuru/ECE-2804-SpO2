@@ -44,7 +44,6 @@ public:
     bool dynamic;
     int threshold;
     unsigned int arrayIndex = 0;
-    int muxSelectPin;  //Initialize mux select pin
 
     int sensorValue;
 
@@ -62,15 +61,13 @@ public:
     int verifyCall = 0;
     int periodarr[10];
 
-<<<<<<< Updated upstream
     int waveformWriteInterval = 0;
+
+    void selectMuxInput(int input);   //Function to select input for mux
 };
-=======
     
     //unsigned int arrayLength = 0;
     
-    void selectMuxInput(int input);   //Function to select input for mux
-}; 
->>>>>>> Stashed changes
+
 
 #endif
