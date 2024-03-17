@@ -6,8 +6,6 @@
 #define maxWaveformStorageLength 240
 #define dataWriteInterval 4
 
-
-
 class SensorReader {
 public:
     // Constructors and Destructors
@@ -31,10 +29,6 @@ public:
     unsigned int lastWritten = 0;
     unsigned int waveformArray[maxWaveformStorageLength] = {0};
     unsigned int maxArrayLength = maxWaveformStorageLength;
-
-    void activateLED(int ledpin);    //activates LED
-    void deactivateLED(int ledpin);  //deactivates LED
-    void selectSignalPath(int path); //selects signal path for mux
 
  private:
 
@@ -60,12 +54,6 @@ public:
     int periodarr[10];
 
     int waveformWriteInterval = 0;
-
-    
 };
-    
-    //unsigned int arrayLength = 0;
-    
-
 
 #endif
