@@ -43,12 +43,10 @@ int SensorReader::getSensorValue()
 {
     return sensorValue;
 }
-  
+
 void SensorReader::readSensorValue()
 {
     sensorValue = analogRead(inPin);
-
-    selectMuxInput(0);
 
     // Write to storage array to store waveform information
     if(waveformWriteInterval == dataWriteInterval)
@@ -168,7 +166,7 @@ void SensorReader::drawPeriodInfo()
         for (int i = 0; i < 10; i++)
         {
             if (periodarr[i] == 0)
-            {  
+            {
                 arrayfull = false;
             }   
         }    
@@ -192,10 +190,3 @@ void SensorReader::drawArrayInfo()
 }
 //void SensorReader::getFrequency()
 
-
-//selects signal path for mux
-void SensorReader::selectSignalPath(int path) {
-    digitalWrite(MUX_SELECT_PIN0, path & 0x01 ? HIGH : LOW);
-    digitalWrite(MUX_SELECT_PIN1, (path >> 1) & 0x01 ? HIGH : LOW);
-    digitalWrite(MUX_SELECT_PIN2, (path >> 2) & 0x01 ? HIGH : LOW);
-}
