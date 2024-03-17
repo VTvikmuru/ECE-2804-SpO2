@@ -193,9 +193,4 @@ void SensorReader::drawArrayInfo()
 //void SensorReader::getFrequency()
 
 
-//selects signal path for mux
-void SensorReader::selectSignalPath(int path) {
-    digitalWrite(MUX_SELECT_PIN0, path & 0x01 ? HIGH : LOW);
-    digitalWrite(MUX_SELECT_PIN1, (path >> 1) & 0x01 ? HIGH : LOW);
-    digitalWrite(MUX_SELECT_PIN2, (path >> 2) & 0x01 ? HIGH : LOW);
-}
+

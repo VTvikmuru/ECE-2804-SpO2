@@ -6,9 +6,7 @@
 #define maxWaveformStorageLength 240
 #define dataWriteInterval 4
 
-#define MUX_SELECT_PIN0 5
-#define MUX_SELECT_PIN1 6
-#define MUX_SELECT_PIN2 7
+
 
 class SensorReader {
 public:
@@ -63,7 +61,7 @@ public:
 
     int waveformWriteInterval = 0;
 
-    void selectMuxInput(int input);   //Function to select input for mux
+    
 };
     
     //unsigned int arrayLength = 0;
