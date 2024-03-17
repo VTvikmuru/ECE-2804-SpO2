@@ -193,4 +193,5 @@ void SensorReader::drawArrayInfo()
 //void SensorReader::getFrequency()
 
 
+//selects signal path for mux
 
