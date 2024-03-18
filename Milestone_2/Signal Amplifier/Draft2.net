@@ -1,7 +1,0 @@
-* C:\Dev\GitHub\ECE-2804-SpO2\Milestone_2\Signal Amplifier\Draft2.asc
-V1 N001 0 AC 1
-C1 N002 N001 0.47µ
-R1 N002 0 677k
-.ac dec 1k 0.01 1.3
-.backanno
-.end
