@@ -43,11 +43,10 @@ int SensorReader::getSensorValue()
 {
     return sensorValue;
 }
-  
+
 void SensorReader::readSensorValue()
 {
     sensorValue = analogRead(inPin);
-
 
     // Write to storage array to store waveform information
     if(waveformWriteInterval == dataWriteInterval)
@@ -167,7 +166,7 @@ void SensorReader::drawPeriodInfo()
         for (int i = 0; i < 10; i++)
         {
             if (periodarr[i] == 0)
-            {  
+            {
                 arrayfull = false;
             }   
         }    
@@ -190,5 +189,4 @@ void SensorReader::drawArrayInfo()
     Serial.println("Values END\n"); 
 }
 //void SensorReader::getFrequency()
-
 
