@@ -27,8 +27,6 @@ DisplayHandler handler(&sensor.waveformArray[0], &sensor.maxArrayLength, &sensor
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  sensor.activateLED(LED1);     // activate LED1 initially
-  sensor.selectSignalPath(0);   // Select signal path 0
 
   handler.handlerBegin();
     
@@ -53,8 +51,4 @@ void loop() {
     // Read sensor value
     sensor.readSensorValue();
 
-    sensor.deactivateLED(LED2); // Deactivate LED2
-    sensor.activateLED(LED1);   // Activate LED1
-    sensor.selectSignalPath(0);     // Select path 0
 }
-

@@ -32,9 +32,7 @@ public:
     unsigned int waveformArray[maxWaveformStorageLength] = {0};
     unsigned int maxArrayLength = maxWaveformStorageLength;
 
-    void activateLED(int ledpin);    //activates LED
-    void deactivateLED(int ledpin);  //deactivates LED
-    void selectSignalPath(int path); //selects signal path for mux
+
 
  private:
 
