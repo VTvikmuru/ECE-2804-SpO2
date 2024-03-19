@@ -2,6 +2,10 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 
+#include "SPI.h"
+#include "Adafruit_GFX.h"
+#include "Adafruit_ILI9341.h"
+
 #include <Arduino.h>
 #include <DisplayHandler.h>
 #include <SensorReader.h>
@@ -10,6 +14,10 @@
 #define TFT_CS 10
 // TFT_LED = 6
 // SensorIn = A0
+
+#define MUX_OUTPUT_PIN A0
+#define LED1 2
+#define LED2 3
 
 //Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 SensorReader sensor(A0, 205);
@@ -38,4 +46,16 @@ void loop() {
 
   handler.drawData(dataDisplay::line, ILI9341_TFTWIDTH, 2*ILI9341_TFTHEIGHT/3, 0, 0, "");
   handler.drawData(dataDisplay::text, 0, 2, 35, 20, String(sensor.getFreqSec()) + "Hz,\n   " + String((int)(sensor.getFreqSec() * 60)) + "Bpm");
+
+  // Sensor must be read and its value stored constantly
+  sensor.readSensorValue();
+  // Draws the read sensor value to serial monitor as graph
+  //sensor.drawSensorValue();
+  //sensor.drawPeriodInfo();
+
+  //sensor.drawArrayInfo();
+
+  handler.drawData(dataDisplay::line, ILI9341_TFTWIDTH, 2*ILI9341_TFTHEIGHT/3, 0, 0, "");
+  handler.drawData(dataDisplay::text, 0, 2, 35, 20, String(sensor.getFreqSec()) + "Hz,\n   " + String((int)(sensor.getFreqSec() * 60)) + "Bpm");
 }
+
